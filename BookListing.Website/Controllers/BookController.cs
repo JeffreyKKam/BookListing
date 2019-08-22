@@ -22,8 +22,10 @@ namespace BookListing.Website.Controllers
         }
 
         [HttpGet("[action]")]
-        public void Search(string searchTerm, int page, int pageSize)
+        public SolrResponse Search(string searchTerm = "", int page = 0, int pageSize = 10)
         {
+            var response = SolrService.Query(searchTerm, page, pageSize);
+            return response;
 
         }
 

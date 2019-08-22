@@ -68,16 +68,11 @@ namespace BookListing.DataAccess.Solr
             });
         }
 
-        /// <summary>
-        /// Basic search string query
-        /// </summary>
-        /// <param name="searchString"></param>
-        /// <returns></returns>
-        public SolrResponse Query(string searchString, int page, int pageSize)
+        public SolrResponse Query(string searchString = "", int page = 0, int pageSize = 10)
         {
             var result = RestCall<SolrResponse>(BuildApiUrl(collection, "query"), Method.GET, rq =>
             {
-                rq.AddQueryParameter("q", $"text:{searchString}");
+                rq.AddQueryParameter("q", string.IsNullOrWhiteSpace(searchString) ? "*.*" : $"text:{searchString}");
                 rq.AddQueryParameter("rows", pageSize.ToString());
                 rq.AddQueryParameter("start", (pageSize * page).ToString());
             });
