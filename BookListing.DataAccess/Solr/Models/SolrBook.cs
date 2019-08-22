@@ -11,32 +11,32 @@ namespace BookListing.DataAccess.Solr.Models
     public class SolrBook
     {
         public Guid id { get; set; }
-        public int BookNum { get; set; }
-        public string Title { get; set; }
-        public decimal AverageRating { get; set; }
-        public string ISBN { get; set; }
-        public string ISBN13 { get; set; }
-        public string LanguageCode { get; set; }
-        public int Pages { get; set; }
-        public int RatingsCount { get; set; }
-        public int ReviewCount { get; set; }
-        public string Author { get; set; }
+        public int booknum { get; set; }
+        public string title { get; set; }
+        public decimal average_rating { get; set; }
+        public string isbn { get; set; }
+        public string isbn13 { get; set; }
+        public string language_code { get; set; }
+        public int pages { get; set; }
+        public int ratings_count { get; set; }
+        public int reviews_count { get; set; }
+        public string author { get; set; }
 
         public static SolrBook FromBook(Book book)
         {
             return new SolrBook
             {
                 id = book.Id,
-                BookNum = book.BookNum,
-                Title = book.Title,
-                AverageRating = book.AverageRating,
-                ISBN = book.ISBN,
-                ISBN13 = book.ISBN13,
-                LanguageCode = book.LanguageCode,
-                Pages = book.Pages,
-                RatingsCount = book.RatingsCount,
-                ReviewCount = book.ReviewCount,
-                Author = book.Author.Name,
+                booknum = book.BookNum,
+                title = book.Title,
+                average_rating = book.AverageRating,
+                isbn = book.ISBN,
+                isbn13 = book.ISBN13,
+                language_code = book.LanguageCode,
+                pages = book.Pages,
+                ratings_count = book.RatingsCount,
+                reviews_count = book.ReviewCount,
+                author = book.Author.Name,
             };
         }
     }

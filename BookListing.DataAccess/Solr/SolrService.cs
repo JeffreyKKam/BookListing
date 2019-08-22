@@ -58,9 +58,14 @@ namespace BookListing.DataAccess.Solr
         }
 
        
-        public void DeleteBook(Book book)
+        public void DeleteBook(Guid id)
         {
-
+            var body = $"{{ \"delete\" :  {{ \"id\" : \"{id}\"  }} }}";
+            RestCall(BuildApiUrl(collection, "update"), Method.POST, rq =>
+            {
+                rq.AddQueryParameter("commit", "true");
+                rq.AddParameter("text/json", body, ParameterType.RequestBody);
+            });
         }
 
         /// <summary>
@@ -68,9 +73,16 @@ namespace BookListing.DataAccess.Solr
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public string Query(string searchString, int page, int pageSize)
+        public SolrResponse Query(string searchString, int page, int pageSize)
         {
-            return "";
+            var result = RestCall<SolrResponse>(BuildApiUrl(collection, "query"), Method.GET, rq =>
+            {
+                rq.AddQueryParameter("q", $"text:{searchString}");
+                rq.AddQueryParameter("rows", pageSize.ToString());
+                rq.AddQueryParameter("start", (pageSize * page).ToString());
+            });
+
+            return result;
         }
 
 
