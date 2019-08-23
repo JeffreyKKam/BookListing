@@ -1,10 +1,16 @@
 <h1>Book Search</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
 <p *ngIf="!results"><em>Loading...</em></p>
 
+<div style="padding-bottom:5px;">
+  <input type="text" #searchValue (keyup)="onKey(searchValue.value)" style="width:60%" /><button (click)="search(searchValue.value)">Search</button>
+</div>
+
 <div *ngIf="results">
+  <div>
+    Your search returned {{ results.response.numFound }} results
+  </div>
+
   <div *ngFor="let book of results.response.docs">
     <div style="border:black 1px solid; margin-bottom:10px; padding:5px;">
       <h4>{{ book.title}}</h4>
