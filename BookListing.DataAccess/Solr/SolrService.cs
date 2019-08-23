@@ -72,7 +72,7 @@ namespace BookListing.DataAccess.Solr
         {
             var result = RestCall<SolrResponse>(BuildApiUrl(collection, "query"), Method.GET, rq =>
             {
-                rq.AddQueryParameter("q", string.IsNullOrWhiteSpace(searchString) ? "*.*" : $"text:{searchString}");
+                rq.AddQueryParameter("q", string.IsNullOrWhiteSpace(searchString) ? "*:*" : $"text:{searchString}");
                 rq.AddQueryParameter("rows", pageSize.ToString());
                 rq.AddQueryParameter("start", (pageSize * page).ToString());
             });
