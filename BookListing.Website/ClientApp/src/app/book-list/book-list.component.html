@@ -2,11 +2,14 @@
 
 <p *ngIf="!results"><em>Loading...</em></p>
 
-<div style="padding-bottom:5px;">
-  <input type="text" #searchValue (keyup)="onKey(searchValue.value)" style="width:60%" /><button (click)="search(searchValue.value)">Search</button>
-</div>
-
 <div *ngIf="results">
+  <div style="padding-bottom:5px;" class="input-group">
+    <input type="text" #searchValue (keyup)="onKey(searchValue.value)" class="form-control" />
+    <div class="input-group-append">
+      <button class="btn btn-info" (click)="search(searchValue.value,1)">Search</button>
+
+    </div>
+  </div>
   <div>
     Your search returned {{ results.response.numFound }} results
   </div>
@@ -19,5 +22,18 @@
       </div>
     </div>
   </div>
+
+  <div>
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="results.response.numFound"
+                    [(page)]="page" [pageSize]="10"
+                    [maxSize]="5" [boundaryLinks]="true"
+                    (pageChange)="search(searchValue.value, page)">
+
+    </ngb-pagination>
+  </div>
+
 </div>
+
+
 

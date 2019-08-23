@@ -9,7 +9,7 @@ export class BookListComponent {
   public results;
   public baseURL;
   searchValue = '';
-  page = 0;
+  page = 1;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseURL = baseUrl;
@@ -18,8 +18,9 @@ export class BookListComponent {
 
   search(searchTerm, page) {
 
+    var solrPage = page - 1;
     this.http.get(this.baseURL + 'api/Book/Search', {
-      params: { searchTerm: searchTerm, page : page }
+      params: { searchTerm: searchTerm, page: solrPage.toString() }
     }).subscribe(result => {
       this.results = result;
     }, error => console.error(error));
