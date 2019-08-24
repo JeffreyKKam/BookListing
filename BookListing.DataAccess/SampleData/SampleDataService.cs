@@ -8,11 +8,18 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using BookListing.DataAccess.Solr;
+using BookListing.DataAccess.Services;
 
 namespace BookListing.DataAccess.SampleData
 {
     public static class SampleDataService
     {
+        public static void AddSampleData(BookContext context, ISolrService solrService, IUserService userService)
+        {
+            ReadSampleData(context, solrService);
+            AddSampleUsers(context, userService);
+        }
+
         public static void ReadSampleData(BookContext context, ISolrService solrService)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -63,6 +70,22 @@ namespace BookListing.DataAccess.SampleData
                         }
                     }
                 }
+            }
+        }
+
+        public static void AddSampleUsers(BookContext context, IUserService userService)
+        {
+            // sample users for simplicity, store in a db with hashed passwords in production applications
+            var sampleUsers = new List<User>
+            {
+                new User { FirstName = "Admin", LastName = "User", Username = "admin", Password = userService.HashPassword("admin"), Role = Role.Admin },
+                new User { FirstName = "Normal", LastName = "User", Username = "user", Password = userService.HashPassword("user"), Role = Role.User }
+            };
+            // only add in users if there currently aren't any
+            if (!context.Users.Any())
+            {
+                context.Users.AddRange(sampleUsers);
+                context.SaveChanges();
             }
         }
     }

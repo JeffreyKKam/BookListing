@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookListing.DataAccess.Models;
 using BookListing.DataAccess.SampleData;
+using BookListing.DataAccess.Services;
 using BookListing.DataAccess.Solr;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,8 @@ namespace BookListing.Website
                 var services = scope.ServiceProvider;
                 var context = services.GetService<BookContext>();
                 var solr = services.GetService<ISolrService>();
-                SampleDataService.ReadSampleData(context, solr);
+                var userService = services.GetService<IUserService>();
+                SampleDataService.AddSampleData(context, solr, userService);
             }
             host.Run();
         }
