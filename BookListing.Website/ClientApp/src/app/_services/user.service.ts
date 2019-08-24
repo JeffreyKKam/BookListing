@@ -10,4 +10,8 @@ export class UserService {
     getAll() {
         return this.http.get<User[]>(`${this.baseUrl}/users`);
     }
+
+    getById(id: number) {
+      return this.http.get<User>(`${this.baseUrl}/users/${id}`);
+    }
 }

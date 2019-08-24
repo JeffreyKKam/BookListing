@@ -9,8 +9,10 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './book-list/book-list.component';
-import { LoginComponent } from './login';
+import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
 
+import { Role } from './_models';
 import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -22,6 +24,7 @@ import { fakeBackendProvider } from './_helpers';
     HomeComponent,
     BookListComponent,
     LoginComponent,
+    AdminComponent,
     
   ],
   imports: [
@@ -31,9 +34,10 @@ import { fakeBackendProvider } from './_helpers';
     NgbModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },      
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }  },
+      { path: 'books', component: BookListComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
-      { path: 'books', component: BookListComponent },
       { path: '**', redirectTo: '' }
 
     ])

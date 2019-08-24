@@ -12,6 +12,9 @@
             <a class="nav-link text-dark" [routerLink]='["/books"]'>Book Search</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
+          </li>          
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="text-dark nav-link" style="cursor: pointer;" (click)="logout()">Logout</a>
           </li>
         </ul>
