@@ -1,0 +1,66 @@
+<h1>Book Edit</h1>
+
+<div>
+  <form [formGroup]="bookForm" (ngSubmit)="onFormSubmit(bookForm.value)">
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        Title
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="Book Title" formControlName="title">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        Author
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="Author" formControlName="author">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        Language Code
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="eng" formControlName="language_code">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        ISBN
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="ISBN" formControlName="isbn">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        ISBN13
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="ISBN13" formControlName="isbn13">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        Pages
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="1" formControlName="pages">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-1 control-label">
+        Rating
+      </div>
+      <div class="col-sm-2">
+        <input placeholder="4.5" formControlName="average_rating">
+      </div>
+    </div>
+    <div class="button-row">
+      <button type="submit" [disabled]="!bookForm.valid" class="btn btn-primary">Save</button>
+      <button type="button" [routerLink]="['/book', id]" class="btn btn-danger">Cancel</button>
+    </div>
+  </form>
+</div>

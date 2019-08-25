@@ -6,6 +6,7 @@ using BookListing.DataAccess.Models;
 using BookListing.DataAccess.Solr;
 using BookListing.DataAccess.Solr.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookListing.Website.Controllers
 {
@@ -15,51 +16,72 @@ namespace BookListing.Website.Controllers
         private ISolrService SolrService { get; set; }
         private BookContext Context { get; set; }
 
-        public BookController(BookContext bookContext, ISolrService solrService)
+        public BookController(BookContext context, ISolrService solrService)
         {
             SolrService = solrService;
-            Context = bookContext;
+            Context = context;
         }
 
         [HttpGet("[action]")]
-        public SolrResponse Search(string searchTerm = "", int page = 0, int pageSize = 10)
+        public IActionResult Search(string searchTerm = "", int page = 0, int pageSize = 10)
         {
             var response = SolrService.Query(searchTerm, page, pageSize);
-            return response;
+            return Ok(response);
 
         }
 
-        [HttpPost("[action]")]
-        public JsonResult Create(SolrBook book)
+        [HttpGet("{id}")]
+        public IActionResult GetBook(Guid id)
         {
-            return new JsonResult("");
+            var book = Context.Books
+                    .Include(m => m.Author)
+                    .SingleOrDefault(m => m.Id == id);
+            if (book == null)
+            {
+                return NotFound("A book entity with the given Id does not exist");
+            }
+            return Ok(SolrBook.FromBook(book));
         }
 
-        [HttpGet("[action]")]
-        public Book Edit(Guid id)
+        [HttpPost]
+        public IActionResult Insert([FromBody]SolrBook book)
         {
-            return Context.Books.SingleOrDefault(m => m.Id == id);
-        }
-
-        [HttpPost("[action]")]
-        public JsonResult Edit(Book book)
-        {
-            Context.Books.Update(book);
+            var dbBook = new Book();
+            book.SaveToModel(Context, dbBook);
+            Context.Books.Add(dbBook);
             Context.SaveChanges();
-            SolrService.IndexBook(book);
-            return new JsonResult("");
+            SolrService.IndexBook(dbBook); 
+            return Ok(SolrBook.FromBook(dbBook));
         }
 
-        [HttpPost("[action]")]
-        public JsonResult Delete(Guid id)
+        [HttpPut]
+        public IActionResult Update([FromBody]SolrBook book)
+        {
+            var dbBook = Context.Books.SingleOrDefault(m => m.Id == book.id);
+            if (dbBook == null)
+            {
+                return NotFound($"Book with id {book.id} was not found");
+            }
+            book.SaveToModel(Context, dbBook);
+            Context.Books.Update(dbBook);
+            Context.SaveChanges();
+            SolrService.IndexBook(dbBook);
+            return Ok(SolrBook.FromBook(dbBook));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
         {
             var book = Context.Books.SingleOrDefault(m => m.Id == id);
-            if (book != null) {
-                Context.Books.Remove(book);
-                Context.SaveChanges();
-                SolrService.DeleteBook(id);
+            if (book == null)
+            {
+                return NotFound("A book entity with the given Id does not exist");
+
             }
-            return new JsonResult("");
+            Context.Books.Remove(book);
+            Context.SaveChanges();
+            SolrService.DeleteBook(id);
+            return Ok();
         }
     }
 }

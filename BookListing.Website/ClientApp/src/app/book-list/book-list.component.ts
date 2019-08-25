@@ -1,35 +1,31 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { BookService } from '../_services/book.service';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html'
 })
-export class BookListComponent {
-  public results;
-  public baseURL;
-  searchValue = '';
-  page = 1;
+export class BookListComponent implements OnInit{
+    public results;
+    searchValue = '';
+    page = 1;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this.baseURL = baseUrl;
-    this.search(this.searchValue, this.page);
-  }
+    constructor(private bookService: BookService) {    }
 
-  search(searchTerm, page) {
+    ngOnInit() {
+        this.search(this.searchValue, this.page);
+    }
 
-    var solrPage = page - 1;
-    this.http.get(this.baseURL + 'api/Book/Search', {
-      params: { searchTerm: searchTerm, page: solrPage.toString() }
-    }).subscribe(result => {
-      this.results = result;
-    }, error => console.error(error));
-  }
+    search(searchTerm, page) {
+        this.bookService.search(searchTerm, page).subscribe(results => {
+            this.results = results;
+        }, error => console.error(error));
+    }
 
-  // possibly used to get suggestions
-  onKey(value: string) {
-    this.searchValue = value;
-  }
+    // possibly used to get suggestions
+    onKey(value: string) {
+        this.searchValue = value;
+    }
 }
 
 

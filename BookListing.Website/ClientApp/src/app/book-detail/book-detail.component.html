@@ -1,0 +1,22 @@
+<p *ngIf="!book"><em>Loading...</em></p>
+
+<div *ngIf="book">
+    <h2>{{book.title}}</h2>
+    <div class="container">
+      <div>Author: {{book.author}}</div>
+        <div>isbn: {{book.isbn}}</div>
+        <div>isbn13: {{book.isbn13}}</div>
+        <div>Pages: {{book.pages}}</div>
+        <div>Language: {{book.language_code}}</div>
+        <div>rating: {{book.average_rating}}</div>
+        <div>reviews: {{book.reviews_count}}</div>
+        <div class="btn-group" role="group">
+            <button class="btn btn-secondary" [routerLink]="['/books']">Back</button>
+            <button class="btn btn-primary" [routerLink]="['/book-edit', book.id]">Edit</button>
+            <button class="btn btn-danger" (click)="deleteBook(book.id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+
