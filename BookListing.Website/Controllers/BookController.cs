@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using BookListing.DataAccess.Models;
 using BookListing.DataAccess.Solr;
 using BookListing.DataAccess.Solr.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookListing.Website.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class BookController : Controller
     {
@@ -23,9 +25,9 @@ namespace BookListing.Website.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult Search(string searchTerm = "", int page = 0, int pageSize = 10)
+        public IActionResult Search(string searchTerm = "", int page = 0, int pageSize = 10, string filter = "")
         {
-            var response = SolrService.Query(searchTerm, page, pageSize);
+            var response = SolrService.Query(searchTerm, page, pageSize, filter);
             return Ok(response);
 
         }

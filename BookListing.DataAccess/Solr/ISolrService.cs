@@ -27,10 +27,13 @@ namespace BookListing.DataAccess.Solr
         void DeleteBook(Guid id);
 
         /// <summary>
-        /// Basic search string query
+        /// Solr Query with various parameters
         /// </summary>
         /// <param name="searchString"></param>
+        /// <param name="filterQuery"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        SolrResponse Query(string searchString, int page, int pageSize);
+        SolrResponse Query(string searchString, int page, int pageSize, string filterQuery);
     }
 }
