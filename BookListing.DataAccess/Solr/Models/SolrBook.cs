@@ -1,5 +1,6 @@
 ﻿using BookListing.DataAccess.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -36,8 +37,36 @@ namespace BookListing.DataAccess.Solr.Models
                 pages = book.Pages,
                 ratings_count = book.RatingsCount,
                 reviews_count = book.ReviewCount,
-                author = book.Author.Name,
+                author = book.Author?.Name,
             };
+        }
+
+        public void SaveToModel(BookContext context, Book dbBook)
+        {
+            dbBook.Id = id;
+            dbBook.BookNum = booknum;
+            dbBook.Title = title;
+            dbBook.AverageRating = average_rating;
+            dbBook.ISBN = isbn;
+            dbBook.LanguageCode = language_code;
+            dbBook.Pages = pages;
+            dbBook.RatingsCount = ratings_count;
+            dbBook.ReviewCount = reviews_count;
+
+            Author dbAuthor = null;
+            if (!string.IsNullOrWhiteSpace(author))
+            {
+                dbAuthor = context.Authors.SingleOrDefault(m => m.Name == author);
+                if (dbAuthor == null)
+                {
+                    dbAuthor = new Author { Name = author };
+                    context.Authors.Add(dbAuthor);
+                }
+            }
+            if(dbBook.Author == null || dbBook.Author.Id != dbAuthor.Id)
+            {
+                dbBook.Author = dbAuthor;
+            }
         }
     }
 }

@@ -10,15 +10,21 @@
 
     </div>
   </div>
-  <div>
-    Your search returned {{ results.response.numFound }} results
+  <div class="clearfix">
+    <div style="float:left;">
+      Your search returned {{ results.response.numFound }} results
+    </div>
+    <div class="button-row" style="float:right;">
+      <a class="btn btn-primary" [routerLink]="['/book-add']">Add</a>
+    </div>
   </div>
 
   <div *ngFor="let book of results.response.docs">
     <div style="border:black 1px solid; margin-bottom:10px; padding:5px;">
-      <h4>{{ book.title}}</h4>
+      <h4><a [routerLink]="['/book/', book.id]">{{ book.title}}</a></h4>
       <div>
-        <span>Author: {{book.author}}</span>
+        <span>Author: {{book.author}}</span><br />
+        <span>ISBN: {{book.isbn}}</span>
       </div>
     </div>
   </div>

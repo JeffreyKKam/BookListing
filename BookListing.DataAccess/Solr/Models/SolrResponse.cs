@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,12 +16,14 @@ namespace BookListing.DataAccess.Solr.Models
         public string warnings { get; set; }
         public int status { get; set; }
         public decimal QTime { get; set; }
+        [JsonProperty("params")]
         public SolrParams parameters {get;set;}
     }
 
     public class SolrParams
     {
-        public string q { get; set; }
+        [JsonProperty("q")]
+        public string query { get; set; }
         public string start { get; set; }
         public string rows { get; set; }
         public string facet { get; set; }

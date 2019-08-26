@@ -18,7 +18,7 @@ namespace BookListing.DataAccess.Models
         public int Pages { get; set; }
         public int RatingsCount { get; set; }
         public int ReviewCount { get; set; }
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
 
     }
 }

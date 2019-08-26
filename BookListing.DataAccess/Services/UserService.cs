@@ -15,16 +15,16 @@ namespace BookListing.DataAccess.Services
         private readonly AppSettings AppSettings;
         private readonly BookContext Context;
 
-        public UserService(BookContext bookContext, IOptions<AppSettings> appSettings)
+        public UserService(BookContext context, IOptions<AppSettings> appSettings)
         {
             AppSettings = appSettings.Value;
-            Context = bookContext;
+            Context = context;
         }
 
         public User Authenticate(string username, string password)
-        {            
+        {
             var user = Context.Users.SingleOrDefault(x => x.Username == username);
-                       
+
             // return null if user not found
             if (user == null) return null;
             if (!HasValidPassword(password, user.Password)) return null;
@@ -70,18 +70,17 @@ namespace BookListing.DataAccess.Services
 
         public IEnumerable<User> GetAll()
         {
-
-            return Context.Users.ToList().Select(m => {
+            return Context.Users.ToList().Select(m =>
+            {
                 m.Password = null;
                 return m;
-            }); 
+            });
         }
 
-
         public User GetById(int id)
-        {            
+        {
             var user = Context.Users.Find(id);
-            if(user != null)
+            if (user != null)
             {
                 user.Password = null;
             }
