@@ -75,6 +75,8 @@ namespace BookListing.DataAccess.Solr
                 rq.AddQueryParameter("q", string.IsNullOrWhiteSpace(searchString) ? "*:*" : $"text:{searchString}");
                 rq.AddQueryParameter("rows", pageSize.ToString());
                 rq.AddQueryParameter("start", (pageSize * page).ToString());
+                // Since we aren't letting the end user choose the facetin metadata, so we are hard coding
+                // which metadata to facet on, and the range and step for each faceting group
                 rq.AddQueryParameter("facet", "on");
                 rq.AddQueryParameter("facet.range", "average_rating");
                 rq.AddQueryParameter("facet.range.start", "0");

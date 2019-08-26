@@ -4,10 +4,9 @@
 
 <div *ngIf="results">
   <div style="padding-bottom:5px;" class="input-group">
-    <input type="text" #searchValue (keyup)="onKey(searchValue.value)" class="form-control" />
+    <input type="text" #searchValue (keyup)="onKey(searchValue.value)" (keyup.enter)="search(searchValue.value,1)" class="form-control" />
     <div class="input-group-append">
       <button class="btn btn-info" (click)="search(searchValue.value,1)">Search</button>
-
     </div>
   </div>
   <div class="clearfix">
@@ -16,6 +15,12 @@
     </div>
     <div class="button-row" style="float:right;">
       <a class="btn btn-primary" [routerLink]="['/book-add']">Add</a>
+    </div>
+  </div>
+
+  <div id="facets" *ngFor="let facet of results.facet_counts.facet_ranges.average_rating.rangeCounts">
+    <div *ngIf="facet.count != 0">
+      <span>{{facet.start}}-{{facet.end}} ({{facet.count}})</span>
     </div>
   </div>
 
