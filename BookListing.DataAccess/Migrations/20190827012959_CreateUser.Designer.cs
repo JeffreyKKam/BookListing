@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookListing.DataAccess.Migrations
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20190824210539_CreateUsers")]
-    partial class CreateUsers
+    [Migration("20190827012959_CreateUser")]
+    partial class CreateUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,8 @@ namespace BookListing.DataAccess.Migrations
 
             modelBuilder.Entity("BookListing.DataAccess.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName");
 

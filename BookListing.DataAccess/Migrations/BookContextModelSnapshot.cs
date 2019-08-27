@@ -66,9 +66,8 @@ namespace BookListing.DataAccess.Migrations
 
             modelBuilder.Entity("BookListing.DataAccess.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName");
 

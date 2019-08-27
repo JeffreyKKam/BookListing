@@ -70,21 +70,49 @@ namespace BookListing.DataAccess.Services
 
         public IEnumerable<User> GetAll()
         {
-            return Context.Users.ToList().Select(m =>
-            {
-                m.Password = null;
-                return m;
-            });
+            return Context.Users.ToList();
         }
 
-        public User GetById(int id)
+        public User GetById(Guid id)
         {
-            var user = Context.Users.Find(id);
-            if (user != null)
-            {
-                user.Password = null;
-            }
+            return Context.Users.Find(id);
+        }
+
+        public User AddUser(User user)
+        {
+            Context.Users.Add(user);
+            Context.SaveChanges();
             return user;
+        }
+
+        public User UpdateUser(User user)
+        {
+            var userToUpdate = GetById(user.Id);
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            Context.Users.Update(userToUpdate);
+            Context.SaveChanges();
+            return user;
+        }
+
+        public void UpdatePassword(Guid id, byte[] password)
+        {
+            var userToUpdate = GetById(id);
+            userToUpdate.Password = password;
+            Context.Users.Update(userToUpdate);
+            Context.SaveChanges();
+
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            var user = Context.Users.SingleOrDefault(m => m.Id == id);
+            if(user == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            Context.Users.Remove(user);
+            Context.SaveChanges();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace BookListing.Website.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var user = UserService.GetById(id);
 
@@ -53,13 +53,46 @@ namespace BookListing.Website.Controllers
             }
 
             // only allow admins to access other user records
-            var currentUserId = int.Parse(User.Identity.Name);
+            var currentUserId = Guid.Parse(User.Identity.Name);
             if (id != currentUserId && !User.IsInRole(Role.Admin))
             {
                 return Forbid();
             }
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        public IActionResult AddUser(VMUser user)
+        {
+            var dbUser = user.ToDbUser();
+            dbUser.Password = UserService.HashPassword(user.Password);
+            UserService.AddUser(dbUser);
+            return Ok(dbUser);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateUser(VMUser user)
+        {
+            if (UserService.GetById(user.Id) == null)
+            {
+                return NotFound();
+            }
+            var dbUser = user.ToDbUser();
+            UserService.UpdateUser(dbUser);
+            return Ok(dbUser);
+        }
+
+        [HttpPut("password")]
+        public IActionResult UpdatePassword(Guid id, string password)
+        {
+            if (UserService.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            var hashed = UserService.HashPassword(password);
+            UserService.UpdatePassword(id, hashed);
+            return Ok();
         }
     }
 }

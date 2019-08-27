@@ -17,8 +17,7 @@ import { AdminComponent } from './admin/admin.component';
 
 import { Role } from './_models';
 import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
-// used to create fake backend
-//import { fakeBackendProvider } from './_helpers';
+
 
 @NgModule({
   declarations: [
