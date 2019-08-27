@@ -2,60 +2,63 @@
 
 <div>
   <form [formGroup]="bookForm" (ngSubmit)="onFormSubmit(bookForm.value)">
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         Title
       </div>
-      <div class="col-sm-2">
-        <input placeholder="Book Title" formControlName="title">
+      <div class="col-sm-4">
+        <input placeholder="Book Title" formControlName="title" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         Author
       </div>
-      <div class="col-sm-2">
-        <input placeholder="Author" formControlName="author">
+      <div class="col-sm-4">
+        <input placeholder="Author" formControlName="author" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         Language Code
       </div>
-      <div class="col-sm-2">
-        <input placeholder="eng" formControlName="language_code">
+      <div class="col-sm-4">
+        <input placeholder="eng" formControlName="language_code" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         ISBN
       </div>
-      <div class="col-sm-2">
-        <input placeholder="ISBN" formControlName="isbn">
+      <div class="col-sm-4">
+        <input placeholder="ISBN" formControlName="isbn" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         ISBN13
       </div>
-      <div class="col-sm-2">
-        <input placeholder="ISBN13" formControlName="isbn13">
+      <div class="col-sm-4">
+        <input placeholder="ISBN13" formControlName="isbn13" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         Pages
       </div>
-      <div class="col-sm-2">
-        <input placeholder="1" formControlName="pages">
+      <div class="col-sm-4">
+        <input placeholder="2" type="number" formControlName="pages" class="form-control">
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-1 control-label">
+    <div class="form-group row">
+      <div class="col-sm-2 control-label font-weight-bold">
         Rating
       </div>
-      <div class="col-sm-2">
-        <input placeholder="4.5" formControlName="average_rating">
+      <div class="col-sm-4">
+        <input placeholder="4.5" type="number"formControlName="average_rating" class="form-control">
+        <div *ngIf="bookForm.controls.average_rating.invalid && (bookForm.controls.average_rating.dirty || bookForm.controls.average_rating.touched)" class="alert alert-danger">
+          Rating is required, and must be between 0 and 5
+        </div>
       </div>
     </div>
     <div class="button-row">
