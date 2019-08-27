@@ -14,22 +14,37 @@
       Your search returned {{ results.response.numFound }} results
     </div>
     <div class="button-row" style="float:right;">
-      <a class="btn btn-primary" [routerLink]="['/book-add']">Add</a>
+      <a class="btn btn-primary btn-sm" [routerLink]="['/book-add']">New Book</a>
     </div>
   </div>
 
-  <div id="facets" *ngFor="let facet of results.facet_counts.facet_ranges.average_rating.rangeCounts">
-    <div *ngIf="facet.count != 0">
-      <span>{{facet.start}}-{{facet.end}} ({{facet.count}})</span>
+  <div id="facets" class="rounded border border-dark" style="padding:5px; margin-top:5px; margin-bottom:5px;">
+    <div class="clearfix">
+      <h4 style="font-weight:bold; display:inline-block">Ratings</h4><div *ngIf="filter != ''" style="display:inline-block; float:right;"><button class="btn btn-info btn-sm" (click)="clearFilter()">Clear</button></div>
     </div>
-  </div>
+    
+    <div class="row">
+      <ng-container *ngFor="let facet of results.facet_counts.facet_ranges.average_rating.rangeCounts">
+        <div *ngIf="facet.count != 0" class="col-md-2">
+         <a [routerLink]="" (click)="search(searchValue.value, 1, facet.start, facet.end)">{{facet.start}}-{{facet.end}} ({{facet.count}})</a>
+        </div>
+      </ng-container>
+      
+    </div>
+  </div> 
+  
 
   <div *ngFor="let book of results.response.docs">
-    <div style="border:black 1px solid; margin-bottom:10px; padding:5px;">
-      <h4><a [routerLink]="['/book/', book.id]">{{ book.title}}</a></h4>
+    <div class="rounded border border-dark" style="margin-bottom:10px; padding:5px;">
+      <div class="clearfix">
+        <h4><a [routerLink]="['/book/', book.id]">{{ book.title}}</a></h4>
+      </div>      
       <div>
-        <span>Author: {{book.author}}</span><br />
-        <span>ISBN: {{book.isbn}}</span>
+        <div class="row">
+          <div class="col-sm-6">Author: {{book.author}}</div>
+          <div class="col-sm-6">Rating: {{book.average_rating}}</div>
+          <div class="col-sm-6">ISBN: {{book.isbn}}</div>
+        </div>        
       </div>
     </div>
   </div>
@@ -39,7 +54,7 @@
                     [collectionSize]="results.response.numFound"
                     [(page)]="page" [pageSize]="10"
                     [maxSize]="5" [boundaryLinks]="true"
-                    (pageChange)="search(searchValue.value, page)">
+                    (pageChange)="search(searchValue.value, page, facetStart, facetEnd)">
 
     </ngb-pagination>
   </div>
