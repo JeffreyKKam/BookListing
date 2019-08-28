@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190824210539_CreateUsers.cs" />
+    <Compile Remove="Migrations\20190824210539_CreateUsers.Designer.cs" />
+    <Compile Remove="Migrations\20190827012438_AddUser.cs" />
+    <Compile Remove="Migrations\20190827012438_AddUser.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="SampleData\books.csv" />
   </ItemGroup>
 

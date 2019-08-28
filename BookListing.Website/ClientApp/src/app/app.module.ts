@@ -14,11 +14,13 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
+import { UserAddComponent } from './user-add/user-add.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserPasswordComponent } from './user-password/user-password.component';
 
 import { Role } from './_models';
 import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
-// used to create fake backend
-//import { fakeBackendProvider } from './_helpers';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
     BookEditComponent,
     LoginComponent,
     AdminComponent,
-    
+    UserAddComponent,
+    UserEditComponent,
+    UserPasswordComponent,    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +50,9 @@ import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
       { path: 'book/:id', component: BookDetailComponent, canActivate: [AuthGuard] },
       { path: 'book-add', component: BookAddComponent, canActivate: [AuthGuard] },
       { path: 'book-edit/:id', component: BookEditComponent, canActivate: [AuthGuard] },
+      { path: 'user-add', component: UserAddComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+      { path: 'user-edit/:id', component: UserEditComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+      { path: 'user-password/:id', component: UserPasswordComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
       { path: 'login', component: LoginComponent },
       { path: '**', redirectTo: '' }
 

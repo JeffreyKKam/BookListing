@@ -28,7 +28,7 @@ export class BookEditComponent implements OnInit {
     this.getBook(this.route.snapshot.params['id']);
     this.bookForm = this.formBuilder.group({
       'title': [null, Validators.required],
-      'average_rating': [null, Validators.required],
+      'average_rating': [null, [Validators.required, Validators.min(0), Validators.max(5)]],
       'isbn': [null, Validators.required],
       'isbn13': [null, Validators.required],
       'language_code': [null, Validators.required],

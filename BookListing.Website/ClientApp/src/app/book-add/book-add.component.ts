@@ -18,13 +18,13 @@ export class BookAddComponent {
   language_code: string;
   pages: number;
   author: string;
-
+  message: string;
   constructor(private bookService: BookService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.bookForm = this.formBuilder.group({
       'title': [null, Validators.required],
-      'average_rating': [null, Validators.required],
+      'average_rating': [null, [Validators.required, Validators.min(0), Validators.max(5)]],
       'isbn': [null, Validators.required],
       'isbn13': [null, Validators.required],
       'language_code': [null, Validators.required],

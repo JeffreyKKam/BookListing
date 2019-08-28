@@ -6,26 +6,41 @@ import { BookService } from '../_services/book.service';
   templateUrl: './book-list.component.html'
 })
 export class BookListComponent implements OnInit{
-    public results;
-    searchValue = '';
-    page = 1;
+  public results;
+  searchValue = '';
+  page = 1;
+  facetStart = null;
+  facetEnd = null;
+  filter = '';
 
-    constructor(private bookService: BookService) {    }
+  constructor(private bookService: BookService) { }
 
-    ngOnInit() {
-        this.search(this.searchValue, this.page);
+  ngOnInit() {
+    this.search(this.searchValue, this.page, null, null);
+  }
+
+  search(searchTerm, page, facetStart, facetEnd) {
+    this.searchValue = searchTerm;
+    this.page = page;
+    this.filter = '';
+    if (facetStart && facetEnd) {
+      this.facetStart = facetStart;
+      this.facetEnd = facetEnd;
+      this.filter = `average_rating:[ ${facetStart} TO ${facetEnd}]`;
     }
+    this.bookService.search(this.searchValue, this.page, this.filter).subscribe(results => {
+      this.results = results;
+    }, error => console.error(error));
+  }
 
-    search(searchTerm, page) {
-        this.bookService.search(searchTerm, page).subscribe(results => {
-            this.results = results;
-        }, error => console.error(error));
-    }
+  clearFilter() {
+    this.search(this.searchValue, 1, null, null);
+  }
 
-    // possibly used to get suggestions
-    onKey(value: string) {
-        this.searchValue = value;
-    }
+  // possibly used to get suggestions
+  onKey(value: string) {
+    this.searchValue = value;
+  }
 }
 
 

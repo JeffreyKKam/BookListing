@@ -68,13 +68,24 @@ namespace BookListing.DataAccess.Solr
             });
         }
 
-        public SolrResponse Query(string searchString = "", int page = 0, int pageSize = 10)
+        public SolrResponse Query(string searchString = "", int page = 0, int pageSize = 10, string filterQuery = "")
         {
             var result = RestCall<SolrResponse>(BuildApiUrl(collection, "query"), Method.GET, rq =>
             {
                 rq.AddQueryParameter("q", string.IsNullOrWhiteSpace(searchString) ? "*:*" : $"text:{searchString}");
                 rq.AddQueryParameter("rows", pageSize.ToString());
                 rq.AddQueryParameter("start", (pageSize * page).ToString());
+                // Since we aren't letting the end user choose the facetin metadata, so we are hard coding
+                // which metadata to facet on, and the range and step for each faceting group
+                rq.AddQueryParameter("facet", "on");
+                rq.AddQueryParameter("facet.range", "average_rating");
+                rq.AddQueryParameter("facet.range.start", "0");
+                rq.AddQueryParameter("facet.range.end", "5");
+                rq.AddQueryParameter("facet.range.gap", "0.5");
+                if (!string.IsNullOrWhiteSpace(filterQuery))
+                {
+                    rq.AddQueryParameter("fq", filterQuery);
+                }
             });
 
             return result;

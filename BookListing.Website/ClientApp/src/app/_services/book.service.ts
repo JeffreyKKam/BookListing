@@ -3,15 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SolrResponse, Book } from '../_models';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+const pageSize = 10;
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
-    search(searchTerm, page) {
+    search(searchTerm, page, filter) {
         var solrPage = page - 1;
-        return this.http.get<SolrResponse>(`${this.baseUrl}api/Book/Search`, {
-            headers, params: { searchTerm: searchTerm, page: solrPage.toString() }
+      return this.http.get<SolrResponse>(`${this.baseUrl}api/Book/Search`, {
+        headers, params: { searchTerm: searchTerm, page: solrPage.toString(), pageSize: pageSize.toString(), filter: filter}
         });
     }
 
