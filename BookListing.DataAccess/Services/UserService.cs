@@ -78,8 +78,17 @@ namespace BookListing.DataAccess.Services
             return Context.Users.Find(id);
         }
 
+        private bool DoesUsernameExists(User user)
+        {
+            return (Context.Users.Any(m => m.Username == user.Username && m.Id != user.Id));
+        }
+
         public User AddUser(User user)
         {
+            if (DoesUsernameExists(user))
+            {
+                throw new Exception("Username already exists");
+            }
             Context.Users.Add(user);
             Context.SaveChanges();
             return user;
@@ -90,6 +99,7 @@ namespace BookListing.DataAccess.Services
             var userToUpdate = GetById(user.Id);
             userToUpdate.FirstName = user.FirstName;
             userToUpdate.LastName = user.LastName;
+            userToUpdate.Role = user.Role;
             Context.Users.Update(userToUpdate);
             Context.SaveChanges();
             return user;

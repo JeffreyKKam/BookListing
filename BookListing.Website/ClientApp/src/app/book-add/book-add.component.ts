@@ -18,7 +18,7 @@ export class BookAddComponent {
   language_code: string;
   pages: number;
   author: string;
-
+  message: string;
   constructor(private bookService: BookService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {

@@ -2,19 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { User } from '../_models';
-import { UserService } from '../_services';
+import { UserService, AuthenticationService } from '../_services';
 
 @Component({
   templateUrl: 'admin.component.html'
 })
 export class AdminComponent implements OnInit {
-    users: User[] = [];
+  users: User[] = [];
+  currentUser: User;
 
-    constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
-    ngOnInit() {
-        this.userService.getAll().pipe(first()).subscribe(users => {
-            this.users = users;
-        });
-    }
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.userService.getAll().pipe(first()).subscribe(users => {
+      this.users = users;
+    });
+  }
+
+  deleteUser(id) {
+    this.userService.deleteUser(id).subscribe(r => { this.getUsers() })
+  }
 }

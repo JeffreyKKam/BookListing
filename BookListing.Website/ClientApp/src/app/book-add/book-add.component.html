@@ -1,5 +1,7 @@
 <h1>Create Book</h1>
-
+<div *ngIf="message != ''" class="alert alert-danger">
+  {{message}}
+</div>
 <div>
   <form [formGroup]="bookForm" (ngSubmit)="onFormSubmit(bookForm.value)">
     <div class="form-group row">

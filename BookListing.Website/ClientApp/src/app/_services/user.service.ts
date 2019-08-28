@@ -26,9 +26,9 @@ export class UserService {
     return this.http.put<User>(`${this.baseUrl}api/users`, user, { headers });
   }
 
-  updatePassword(id, password) {
+  updatePassword(id, user) {
     return this.http.put<any>(`${this.baseUrl}api/users/password`, null,
-      { headers, params: { id: id, password: password } });
+      { headers, params: { id: id, password: user.password } });
   }
 
   deleteUser(id) {

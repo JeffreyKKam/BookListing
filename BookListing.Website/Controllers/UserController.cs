@@ -62,37 +62,80 @@ namespace BookListing.Website.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public IActionResult AddUser(VMUser user)
         {
-            var dbUser = user.ToDbUser();
-            dbUser.Password = UserService.HashPassword(user.Password);
-            UserService.AddUser(dbUser);
-            return Ok(dbUser);
+            try
+            {
+                var dbUser = user.ToDbUser();
+                dbUser.Password = UserService.HashPassword(user.Password);
+                UserService.AddUser(dbUser);
+                return Ok(dbUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut]
         public IActionResult UpdateUser(VMUser user)
         {
-            if (UserService.GetById(user.Id) == null)
+            try
             {
-                return NotFound();
+                if (UserService.GetById(user.Id) == null)
+                {
+                    return NotFound();
+                }
+                var dbUser = user.ToDbUser();
+                UserService.UpdateUser(dbUser);
+                return Ok(dbUser);
             }
-            var dbUser = user.ToDbUser();
-            UserService.UpdateUser(dbUser);
-            return Ok(dbUser);
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut("password")]
         public IActionResult UpdatePassword(Guid id, string password)
         {
-            if (UserService.GetById(id) == null)
+            try
             {
-                return NotFound();
+                if (UserService.GetById(id) == null)
+                {
+                    return NotFound();
+                }
+                var hashed = UserService.HashPassword(password);
+                UserService.UpdatePassword(id, hashed);
+                return Ok();
             }
-            var hashed = UserService.HashPassword(password);
-            UserService.UpdatePassword(id, hashed);
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                if (UserService.GetById(id) == null)
+                {
+                    return NotFound();
+                }
+                UserService.DeleteUser(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
