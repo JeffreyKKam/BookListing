@@ -450,7 +450,7 @@
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
-  <field name="author" type="text_general" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
+  <field name="author" type="text_en" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
   <field name="average_rating" type="pfloat" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
   <field name="booknum" type="pint" uninvertible="false" indexed="true" stored="true"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
@@ -460,8 +460,8 @@
   <field name="pages" type="pints" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
   <field name="ratings_count" type="pint" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
   <field name="reviews_count" type="pint" uninvertible="true" multiValued="false" indexed="true" stored="true"/>
-  <field name="text" type="text_general" uninvertible="true" multiValued="true" indexed="true" stored="true"/>
-  <field name="title" type="text_general" uninvertible="false" multiValued="false" indexed="true" stored="true"/>
+  <field name="text" type="text_en" uninvertible="true" multiValued="true" indexed="true" stored="true"/>
+  <field name="title" type="text_en" uninvertible="false" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
