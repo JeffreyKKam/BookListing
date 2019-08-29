@@ -8,8 +8,8 @@ import { UserService, AuthenticationService } from '../_services';
   templateUrl: 'admin.component.html'
 })
 export class AdminComponent implements OnInit {
-  users: User[] = [];
-  currentUser: User;
+  public users: User[] = [];
+  public currentUser: User;
 
   constructor(
     private userService: UserService,
