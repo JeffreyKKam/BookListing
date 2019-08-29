@@ -12,7 +12,7 @@ function getBaseUrl() {
 
 const BASE_URL = [{ provide: 'BASE_URL', useFactory: getBaseUrl }]
 
-describe('Admin Component', () => {
+describe('Admin Component Test', () => {
   let adminComponent: AdminComponent;
   let fixture: ComponentFixture<AdminComponent>;
   let dummyUsers: User[];

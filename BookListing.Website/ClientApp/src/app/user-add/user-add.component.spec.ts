@@ -13,7 +13,7 @@ function getBaseUrl() {
 
 const BASE_URL = [{ provide: 'BASE_URL', useFactory: getBaseUrl }]
 
-describe('User Add Component', () => {
+describe('User Add Component Test', () => {
   let userComponent: UserAddComponent;
   let fixture: ComponentFixture<UserAddComponent>;
   let dummyUser: User;
