@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookAddComponent } from './book-add/book-add.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
@@ -26,7 +25,6 @@ import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     BookListComponent,
     BookAddComponent,
     BookDetailComponent,
@@ -44,9 +42,9 @@ import { JwtInterceptor, ErrorInterceptor, AuthGuard } from './_helpers';
     NgbModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },      
+      { path: '', component: BookListComponent, pathMatch: 'full', canActivate: [AuthGuard] }, 
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }  },
-      { path: 'books', component: BookListComponent, canActivate: [AuthGuard] },
+      { path: 'books', component: BookListComponent, canActivate: [AuthGuard] },   
       { path: 'book/:id', component: BookDetailComponent, canActivate: [AuthGuard] },
       { path: 'book-add', component: BookAddComponent, canActivate: [AuthGuard] },
       { path: 'book-edit/:id', component: BookEditComponent, canActivate: [AuthGuard] },

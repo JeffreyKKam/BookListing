@@ -59,7 +59,7 @@ namespace BookListing.Website
             var connection = new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultDatabase"));
             connection.ConnectTimeout = 300;
             services.AddDbContext<BookContext>(options => options.UseSqlServer(connection.ConnectionString));
-            services.AddScoped<ISolrService>(s => new SolrService(Configuration.GetValue<string>("solrUrl"), Configuration.GetValue<string>("collection")));
+            services.AddScoped<ISolrService>(s => new SolrService(appSettings.SolrUrl, appSettings.Collection));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserService, UserService>();
 

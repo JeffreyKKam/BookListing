@@ -1,6 +1,6 @@
 <h1>Book Search</h1>
 
-<p *ngIf="!results"><em>Loading...</em></p>
+<div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
 
 <div *ngIf="results">
   <div style="padding-bottom:5px;" class="input-group">

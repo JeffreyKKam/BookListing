@@ -27,8 +27,15 @@ namespace BookListing.Website.Controllers
         [HttpGet("[action]")]
         public IActionResult Search(string searchTerm = "", int page = 0, int pageSize = 10, string filter = "")
         {
-            var response = SolrService.Query(searchTerm, page, pageSize, filter);
-            return Ok(response);
+            try
+            {
+                var response = SolrService.Query(searchTerm, page, pageSize, filter);
+                return Ok(response);
+            }
+            catch(Exception)
+            {
+                return BadRequest(new { message = "The search service is not available" });
+            }
 
         }
 
@@ -40,7 +47,7 @@ namespace BookListing.Website.Controllers
                     .SingleOrDefault(m => m.Id == id);
             if (book == null)
             {
-                return NotFound("A book entity with the given Id does not exist");
+                return NotFound(new { message = $"Book with id {id} was not found" });
             }
             return Ok(SolrBook.FromBook(book));
         }
@@ -62,7 +69,7 @@ namespace BookListing.Website.Controllers
             var dbBook = Context.Books.SingleOrDefault(m => m.Id == book.id);
             if (dbBook == null)
             {
-                return NotFound($"Book with id {book.id} was not found");
+                return NotFound(new { message = $"Book with id {book.id} was not found" });
             }
             book.SaveToModel(Context, dbBook);
             Context.Books.Update(dbBook);
@@ -77,7 +84,7 @@ namespace BookListing.Website.Controllers
             var book = Context.Books.SingleOrDefault(m => m.Id == id);
             if (book == null)
             {
-                return NotFound("A book entity with the given Id does not exist");
+                return NotFound(new { message = $"Book with id {id} was not found" });
 
             }
             Context.Books.Remove(book);

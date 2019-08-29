@@ -1,21 +1,21 @@
 <header>
-  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
+  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3'>
     <div class="container">
-      <a class="navbar-brand" [routerLink]='["/"]'>Book Listing</a>
+      <a class="navbar-brand" [routerLink]='["/"]'><img src="../../assets/booklogo.png" height="30" width="30" />Book Listing</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div *ngIf="currentUser" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/books"]'>Book Search</a>
+          <li class="nav-item">
+            <a class="nav-link text-light" [routerLink]='["/books"]'>Book Search</a>
           </li>
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
+          <li class="nav-item">
+            <a class="text-light nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
           </li>          
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="text-dark nav-link" style="cursor: pointer;" (click)="logout()">Logout</a>
+            <a class="text-light nav-link" style="cursor: pointer;" (click)="logout()">Logout</a>
           </li>
         </ul>
       </div>

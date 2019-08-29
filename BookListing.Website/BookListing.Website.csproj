@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\src\assets\booklogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookListing.DataAccess\BookListing.DataAccess.csproj" />
   </ItemGroup>
 

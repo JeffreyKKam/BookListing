@@ -12,6 +12,7 @@ export class BookListComponent implements OnInit{
   facetStart = null;
   facetEnd = null;
   filter = '';
+  errorMessage = '';
 
   constructor(private bookService: BookService) { }
 
@@ -30,7 +31,10 @@ export class BookListComponent implements OnInit{
     }
     this.bookService.search(this.searchValue, this.page, this.filter).subscribe(results => {
       this.results = results;
-    }, error => console.error(error));
+      this.errorMessage = "";
+    }, error => {
+        this.errorMessage = error;
+    });
   }
 
   clearFilter() {
