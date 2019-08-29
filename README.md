@@ -37,3 +37,13 @@ In order to run or deploy the code you will need and ide. Visual Studio is recom
    * this may take a few minutes as it will also seed the database and index that data in solr with some initial sample data 
    which can be found at BookListing.DataAccess\SampleData\books.csv
    * It will also create 2 users with u:pw { admin:admin } and {user: user}
+   
+# Deploy Help
+There are various ways this project can be deployed, however, doing so from Visual studio may be the easiest way to do so.
+Right click on the main BookListing.Website > Choose Publish > 
+  * this will include various options include publishing to an azure app service, through FTP/IIS, or to a folder
+  * You many want to choose a specfic option depending on you setup or if you have an azure account.
+  * For this porject if you choose Folder > the project will build in RELEASE mode, to which the resulting package could also then be deployed to a system of your choosing.
+  * When deploying a Solr instance should be setup (with the collection created and the schema copied over from the Resources/solr folder) and available to the webserver that is hosing the actual website.
+  * The Database server/location should also be availbe to the webserver
+  * in the appsetting.json file, the location for solr and the database connection string should be set accordingly.
